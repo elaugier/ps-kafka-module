@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Confluent.Kafka;
 using System;
+using System.Text;
 
 namespace ps_kafka_module
 {
@@ -24,7 +25,8 @@ namespace ps_kafka_module
             var KafkaProducer = new Producer(config: config);
             try
             {
-                var dr = await KafkaProducer.ProduceAsync(Topic, new Message<Null, string> { Value = Message });
+                
+                var dr = await KafkaProducer.ProduceAsync(Topic, null, Encoding.UTF8.GetBytes(Message));
                 Console.WriteLine($"Delivered '{dr.Value}' to '{dr.TopicPartitionOffset}'");
             }
             catch (KafkaException e)
